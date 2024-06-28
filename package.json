@@ -39,8 +39,6 @@
     "@radix-ui/react-tooltip": "^1.1.0",
     "@react-email/components": "0.0.19",
     "@t3-oss/env-nextjs": "0.10.1",
-    "@types/lodash": "4.17.4",
-    "@types/uuid": "9.0.8",
     "arctic": "1.9.0",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
@@ -70,6 +68,9 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "0.5.13",
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@types/lodash": "4.17.4",
+    "@types/uuid": "9.0.8",
     "@types/node": "20.14.0",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
