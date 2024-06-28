@@ -1,7 +1,7 @@
 import "server-only";
 import { validateRequest } from "@/lib/auth";
 import { cache } from "react";
-import { AuthenticationError } from "./errors";
+import { AuthenticationError } from "../use-cases/errors";
 
 export const getCurrentUser = cache(async () => {
   const session = await validateRequest();

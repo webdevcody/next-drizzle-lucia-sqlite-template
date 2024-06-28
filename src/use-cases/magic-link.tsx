@@ -13,7 +13,7 @@ import {
 import { MagicLinkEmail } from "@/emails/magic-link";
 import { sendEmail } from "@/lib/email";
 import { generateRandomName } from "@/lib/names";
-import { animals, colors, uniqueNamesGenerator } from "unique-names-generator";
+import { NotFoundError, TokenExpiredError } from "./errors";
 
 export async function sendMagicLinkUseCase(email: string) {
   const token = await upsertMagicLink(email);
@@ -26,19 +26,13 @@ export async function sendMagicLinkUseCase(email: string) {
 }
 
 export async function loginWithMagicLinkUseCase(token: string) {
-  console.log("----");
-  console.log("----");
-  console.log("----");
-  console.log("----");
-  console.log("token", token);
   const magicLinkInfo = await getMagicLinkByToken(token);
-  console.log(magicLinkInfo);
   if (!magicLinkInfo) {
-    throw new Error("Token not found");
+    throw new NotFoundError();
   }
 
   if (magicLinkInfo.tokenExpiresAt! < new Date()) {
-    throw new Error("Token expired");
+    throw new TokenExpiredError();
   }
 
   const existingUser = await getUserByEmail(magicLinkInfo.email);

@@ -36,14 +36,14 @@ import { VerifyEmail } from "@/emails/verify-email";
 import { applicationName } from "@/app-config";
 import { sendEmail } from "@/lib/email";
 import { generateRandomName } from "@/lib/names";
-import { AuthenticationError } from "@/lib/errors";
+import { AuthenticationError, EmailInUseError, NotFoundError } from "./errors";
 
 export async function deleteUserUseCase(
   authenticatedUser: UserSession,
   userToDeleteId: UserId
 ): Promise<void> {
   if (authenticatedUser.id !== userToDeleteId) {
-    throw new Error("You can only delete your own account");
+    throw new AuthenticationError();
   }
 
   await deleteUser(userToDeleteId);
@@ -53,7 +53,7 @@ export async function getUserProfileUseCase(userId: UserId) {
   const profile = await getProfile(userId);
 
   if (!profile) {
-    throw new Error("User not found");
+    throw new NotFoundError();
   }
 
   return profile;
@@ -62,7 +62,7 @@ export async function getUserProfileUseCase(userId: UserId) {
 export async function registerUserUseCase(email: string, password: string) {
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
-    throw new AuthenticationError();
+    throw new EmailInUseError();
   }
 
   const user = await createUser(email);
@@ -143,7 +143,7 @@ export async function changePasswordUseCase(token: string, password: string) {
   const tokenEntry = await getPasswordResetToken(token);
 
   if (!tokenEntry) {
-    throw new Error("Invalid token");
+    throw new AuthenticationError();
   }
 
   const userId = tokenEntry.userId;
@@ -156,7 +156,7 @@ export async function verifyEmailUseCase(token: string) {
   const tokenEntry = await getVerifyEmailToken(token);
 
   if (!tokenEntry) {
-    throw new Error("Invalid token");
+    throw new AuthenticationError();
   }
 
   const userId = tokenEntry.userId;

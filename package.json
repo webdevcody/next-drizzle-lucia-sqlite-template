@@ -7,14 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "stripe:listen": "stripe listen --forward-to http://localhost:3000/api/webhooks/stripe",
     "db:push": "drizzle-kit push --config=drizzle.config.ts",
     "db:migrate": "node -r esbuild-register ./src/db/migrate.ts",
     "db:generate": "drizzle-kit generate --config=drizzle.config.ts",
-    "db:studio": "drizzle-kit studio",
-    "db:clear": "node -r esbuild-register ./src/db/clear.ts",
-    "db:seed": "node -r esbuild-register ./src/db/seed.ts",
-    "db:reset": "pnpm run db:clear && pnpm run db:migrate && pnpm run db:seed"
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "1.1.0",
