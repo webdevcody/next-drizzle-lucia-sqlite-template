@@ -34,7 +34,7 @@ const registrationSchema = z
     path: ["passwordConfirmation"],
   });
 
-export default function ResetPasswprdPage({
+export default function ResetPasswordPage({
   searchParams,
 }: {
   searchParams: { token: string };
@@ -63,7 +63,7 @@ export default function ResetPasswprdPage({
       {isSuccess && (
         <>
           <h1 className={cn(pageTitleStyles, "text-center")}>
-            Password Upated
+            Password Updated
           </h1>
           <Alert variant="success">
             <Terminal className="h-4 w-4" />

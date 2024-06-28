@@ -1,5 +1,3 @@
-createPasswordResetToken;
-
 import { generateRandomToken } from "@/data-access/utils";
 import { resetTokens } from "@/db/schema";
 import { UserId } from "@/use-cases/types";
