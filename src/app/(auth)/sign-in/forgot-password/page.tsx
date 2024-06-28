@@ -26,7 +26,7 @@ const registrationSchema = z.object({
   email: z.string().email(),
 });
 
-export default function ForgotPasswprdPage() {
+export default function ForgotPasswordPage() {
   const { toast } = useToast();
 
   const { execute, isPending, isSuccess } = useServerAction(
