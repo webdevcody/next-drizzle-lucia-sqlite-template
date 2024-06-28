@@ -1,20 +1,11 @@
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
-import { googleAuth, lucia } from "@/lib/auth";
+import { googleAuth } from "@/lib/auth";
 import { createGoogleUserUseCase } from "@/use-cases/users";
-import { UserId } from "@/use-cases/types";
 import { getAccountByGoogleIdUseCase } from "@/use-cases/accounts";
 import { afterLoginUrl } from "@/app-config";
+import { setSession } from "@/lib/session";
 
-export async function setSession(userId: UserId) {
-  const session = await lucia.createSession(userId, {});
-  const sessionCookie = lucia.createSessionCookie(session.id);
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes
-  );
-}
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
