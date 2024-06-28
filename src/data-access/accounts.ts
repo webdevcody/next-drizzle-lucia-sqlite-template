@@ -69,10 +69,14 @@ export async function getAccountByUserId(userId: UserId) {
   return account;
 }
 
-export async function updatePassword(userId: UserId, password: string) {
+export async function updatePassword(
+  userId: UserId,
+  password: string,
+  trx = db
+) {
   const salt = crypto.randomBytes(128).toString("base64");
   const hash = await hashPassword(password, salt);
-  await db
+  await trx
     .update(accounts)
     .set({
       password: hash,

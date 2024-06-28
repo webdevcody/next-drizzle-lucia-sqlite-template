@@ -12,12 +12,6 @@ import {
   createAccountViaGoogle,
   updatePassword,
 } from "@/data-access/accounts";
-import {
-  uniqueNamesGenerator,
-  Config,
-  colors,
-  animals,
-} from "unique-names-generator";
 import { createProfile, getProfile } from "@/data-access/profiles";
 import { GoogleUser } from "@/app/api/login/google/callback/route";
 import { GitHubUser } from "@/app/api/login/github/callback/route";
@@ -37,6 +31,8 @@ import { applicationName } from "@/app-config";
 import { sendEmail } from "@/lib/email";
 import { generateRandomName } from "@/lib/names";
 import { AuthenticationError, EmailInUseError, NotFoundError } from "./errors";
+import { db } from "@/db";
+import { createTransaction } from "@/data-access/utils";
 
 export async function deleteUserUseCase(
   authenticatedUser: UserSession,
@@ -148,8 +144,10 @@ export async function changePasswordUseCase(token: string, password: string) {
 
   const userId = tokenEntry.userId;
 
-  await updatePassword(userId, password);
-  await deletePasswordResetToken(token);
+  await createTransaction(async (trx) => {
+    await deletePasswordResetToken(token, trx);
+    await updatePassword(userId, password, trx);
+  });
 }
 
 export async function verifyEmailUseCase(token: string) {
