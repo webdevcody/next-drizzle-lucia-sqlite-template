@@ -68,7 +68,6 @@ export const sessions = sqliteTable("session", {
     .references(() => users.id, {
       onDelete: "cascade",
     })
-    .unique()
     .notNull(),
   expiresAt: integer("expires_at").notNull(),
 });

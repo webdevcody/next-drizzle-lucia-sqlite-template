@@ -1,18 +1,10 @@
 import { env } from "@/env";
 import { assertAuthenticated } from "@/lib/session";
 import { createServerActionProcedure } from "zsa";
-import { AuthenticationError, EmailInUseError } from "../use-cases/errors";
-
-export class ActionError extends Error {
-  constructor(message: string, public code: string) {
-    super(message);
-  }
-}
-
-const whiteListErrors = [EmailInUseError, AuthenticationError];
+import { PublicError } from "../use-cases/errors";
 
 function shapeErrors({ err }: any) {
-  const isAllowedError = whiteListErrors.some((error) => err instanceof error);
+  const isAllowedError = err instanceof PublicError;
   // let's all errors pass through to the UI so debugging locally is easier
   const isDev = env.NODE_ENV === "development";
   if (isAllowedError || isDev) {
