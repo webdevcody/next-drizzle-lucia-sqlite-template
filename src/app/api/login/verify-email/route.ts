@@ -1,5 +1,7 @@
 import { verifyEmailUseCase } from "@/use-cases/users";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request): Promise<Response> {
   try {
     const url = new URL(request.url);

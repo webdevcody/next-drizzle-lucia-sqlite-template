@@ -2,6 +2,8 @@ import { afterLoginUrl } from "@/app-config";
 import { setSession } from "@/lib/session";
 import { loginWithMagicLinkUseCase } from "@/use-cases/magic-link";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request): Promise<Response> {
   try {
     const url = new URL(request.url);
