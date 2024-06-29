@@ -1,10 +1,10 @@
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
 import { createGithubUserUseCase } from "@/use-cases/users";
-import { setSession } from "@/app/api/login/google/callback/route";
 import { getAccountByGithubIdUseCase } from "@/use-cases/accounts";
 import { github } from "@/lib/auth";
 import { afterLoginUrl } from "@/app-config";
+import { setSession } from "@/lib/session";
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);

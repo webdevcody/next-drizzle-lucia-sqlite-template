@@ -1,9 +1,9 @@
 "use server";
 
 import { afterLoginUrl } from "@/app-config";
-import { setSession } from "@/app/api/login/google/callback/route";
 import { rateLimitByKey } from "@/lib/limiter";
 import { unauthenticatedAction } from "@/lib/safe-action";
+import { setSession } from "@/lib/session";
 import { signInUseCase } from "@/use-cases/users";
 import { redirect } from "next/navigation";
 import { z } from "zod";
