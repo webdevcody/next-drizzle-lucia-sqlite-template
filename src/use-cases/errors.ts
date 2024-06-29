@@ -25,3 +25,10 @@ export class TokenExpiredError extends Error {
     this.name = "TokenExpiredError";
   }
 }
+
+export class LoginError extends Error {
+  constructor() {
+    super("Invalid email or password");
+    this.name = "LoginError";
+  }
+}

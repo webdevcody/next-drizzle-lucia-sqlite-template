@@ -30,7 +30,12 @@ import { VerifyEmail } from "@/emails/verify-email";
 import { applicationName } from "@/app-config";
 import { sendEmail } from "@/lib/email";
 import { generateRandomName } from "@/lib/names";
-import { AuthenticationError, EmailInUseError, NotFoundError } from "./errors";
+import {
+  AuthenticationError,
+  EmailInUseError,
+  LoginError,
+  NotFoundError,
+} from "./errors";
 import { db } from "@/db";
 import { createTransaction } from "@/data-access/utils";
 
@@ -79,13 +84,13 @@ export async function signInUseCase(email: string, password: string) {
   const user = await getUserByEmail(email);
 
   if (!user) {
-    throw new AuthenticationError();
+    throw new LoginError();
   }
 
   const isPasswordCorrect = await verifyPassword(email, password);
 
   if (!isPasswordCorrect) {
-    throw new AuthenticationError();
+    throw new LoginError();
   }
 
   return { id: user.id };
