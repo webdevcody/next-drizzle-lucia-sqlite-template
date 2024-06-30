@@ -21,6 +21,8 @@ import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { signInAction } from "./actions";
 import { LoaderButton } from "@/components/loader-button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Terminal } from "lucide-react";
 
 const registrationSchema = z.object({
   email: z.string().email(),
@@ -30,7 +32,7 @@ const registrationSchema = z.object({
 export default function SignInPage() {
   const { toast } = useToast();
 
-  const { execute, isPending } = useServerAction(signInAction, {
+  const { execute, isPending, error, reset } = useServerAction(signInAction, {
     onError({ err }) {
       toast({
         title: "Something went wrong",
@@ -101,6 +103,14 @@ export default function SignInPage() {
               </FormItem>
             )}
           />
+
+          {error && (
+            <Alert variant="destructive">
+              <Terminal className="h-4 w-4" />
+              <AlertTitle>Uhoh, we couldn&apos;t log you in</AlertTitle>
+              <AlertDescription>{error.message}</AlertDescription>
+            </Alert>
+          )}
 
           <LoaderButton isLoading={isPending} className="w-full" type="submit">
             Sign In

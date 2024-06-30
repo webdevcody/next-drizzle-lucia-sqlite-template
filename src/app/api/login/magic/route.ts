@@ -1,5 +1,5 @@
 import { afterLoginUrl } from "@/app-config";
-import { setSession } from "@/app/api/login/google/callback/route";
+import { setSession } from "@/lib/session";
 import { loginWithMagicLinkUseCase } from "@/use-cases/magic-link";
 
 export async function GET(request: Request): Promise<Response> {

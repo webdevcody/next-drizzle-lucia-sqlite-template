@@ -20,7 +20,7 @@ import { applicationName } from "@/app-config";
 export const BASE_URL = env.HOST_NAME;
 
 export function MagicLinkEmail({ token }: { token: string }) {
-  const previewText = `You're been invted to a group!`;
+  const previewText = `You're been invited to a group!`;
   return (
     <Html>
       <Head />

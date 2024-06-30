@@ -19,6 +19,8 @@ import { useServerAction } from "zsa-react";
 import { signUpAction } from "./actions";
 import { LoaderButton } from "@/components/loader-button";
 import { useToast } from "@/components/ui/use-toast";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Terminal } from "lucide-react";
 
 const registrationSchema = z
   .object({
@@ -28,13 +30,13 @@ const registrationSchema = z
   })
   .refine((data) => data.password === data.passwordConfirmation, {
     message: "Passwords don't match",
-    path: ["confirm"],
+    path: ["passwordConfirmation"],
   });
 
 export default function RegisterPage() {
   const { toast } = useToast();
 
-  const { execute, isPending } = useServerAction(signUpAction, {
+  const { execute, isPending, error } = useServerAction(signUpAction, {
     onError({ err }) {
       toast({
         title: "Something went wrong",
@@ -119,6 +121,14 @@ export default function RegisterPage() {
               </FormItem>
             )}
           />
+
+          {error && (
+            <Alert variant="destructive">
+              <Terminal className="h-4 w-4" />
+              <AlertTitle>Uhoh, we couldn&apos;t log you in</AlertTitle>
+              <AlertDescription>{error.message}</AlertDescription>
+            </Alert>
+          )}
 
           <LoaderButton isLoading={isPending} className="w-full" type="submit">
             Register

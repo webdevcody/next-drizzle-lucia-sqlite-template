@@ -12,12 +12,6 @@ import {
   createAccountViaGoogle,
   updatePassword,
 } from "@/data-access/accounts";
-import {
-  uniqueNamesGenerator,
-  Config,
-  colors,
-  animals,
-} from "unique-names-generator";
 import { createProfile, getProfile } from "@/data-access/profiles";
 import { GoogleUser } from "@/app/api/login/google/callback/route";
 import { GitHubUser } from "@/app/api/login/github/callback/route";
@@ -36,14 +30,21 @@ import { VerifyEmail } from "@/emails/verify-email";
 import { applicationName } from "@/app-config";
 import { sendEmail } from "@/lib/email";
 import { generateRandomName } from "@/lib/names";
-import { AuthenticationError } from "@/lib/errors";
+import {
+  AuthenticationError,
+  EmailInUseError,
+  LoginError,
+  NotFoundError,
+} from "./errors";
+import { db } from "@/db";
+import { createTransaction } from "@/data-access/utils";
 
 export async function deleteUserUseCase(
   authenticatedUser: UserSession,
   userToDeleteId: UserId
 ): Promise<void> {
   if (authenticatedUser.id !== userToDeleteId) {
-    throw new Error("You can only delete your own account");
+    throw new AuthenticationError();
   }
 
   await deleteUser(userToDeleteId);
@@ -53,7 +54,7 @@ export async function getUserProfileUseCase(userId: UserId) {
   const profile = await getProfile(userId);
 
   if (!profile) {
-    throw new Error("User not found");
+    throw new NotFoundError();
   }
 
   return profile;
@@ -62,7 +63,7 @@ export async function getUserProfileUseCase(userId: UserId) {
 export async function registerUserUseCase(email: string, password: string) {
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
-    throw new AuthenticationError();
+    throw new EmailInUseError();
   }
 
   const user = await createUser(email);
@@ -83,13 +84,13 @@ export async function signInUseCase(email: string, password: string) {
   const user = await getUserByEmail(email);
 
   if (!user) {
-    throw new AuthenticationError();
+    throw new LoginError();
   }
 
   const isPasswordCorrect = await verifyPassword(email, password);
 
   if (!isPasswordCorrect) {
-    throw new AuthenticationError();
+    throw new LoginError();
   }
 
   return { id: user.id };
@@ -143,20 +144,22 @@ export async function changePasswordUseCase(token: string, password: string) {
   const tokenEntry = await getPasswordResetToken(token);
 
   if (!tokenEntry) {
-    throw new Error("Invalid token");
+    throw new AuthenticationError();
   }
 
   const userId = tokenEntry.userId;
 
-  await updatePassword(userId, password);
-  await deletePasswordResetToken(token);
+  await createTransaction(async (trx) => {
+    await deletePasswordResetToken(token, trx);
+    await updatePassword(userId, password, trx);
+  });
 }
 
 export async function verifyEmailUseCase(token: string) {
   const tokenEntry = await getVerifyEmailToken(token);
 
   if (!tokenEntry) {
-    throw new Error("Invalid token");
+    throw new AuthenticationError();
   }
 
   const userId = tokenEntry.userId;

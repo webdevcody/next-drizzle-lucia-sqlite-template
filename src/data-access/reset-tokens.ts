@@ -1,5 +1,3 @@
-createPasswordResetToken;
-
 import { generateRandomToken } from "@/data-access/utils";
 import { resetTokens } from "@/db/schema";
 import { UserId } from "@/use-cases/types";
@@ -29,6 +27,6 @@ export async function getPasswordResetToken(token: string) {
   return existingToken;
 }
 
-export async function deletePasswordResetToken(token: string) {
-  await db.delete(resetTokens).where(eq(resetTokens.token, token));
+export async function deletePasswordResetToken(token: string, trx = db) {
+  await trx.delete(resetTokens).where(eq(resetTokens.token, token));
 }
