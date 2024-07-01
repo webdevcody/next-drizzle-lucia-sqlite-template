@@ -9,6 +9,7 @@ import { Libre_Franklin } from "next/font/google";
 import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
 import { Header } from "./_header/header";
+import { getCurrentUser } from "@/lib/session";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const user = (await getCurrentUser()) || null;
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -43,7 +45,7 @@ export default async function RootLayout({
           archivo.variable + " " + libre_franklin.variable
         )}
       >
-        <Providers>
+        <Providers user={user}>
           <NextTopLoader />
           <Header />
           <div className="w-full mx-auto container py-12">{children}</div>
