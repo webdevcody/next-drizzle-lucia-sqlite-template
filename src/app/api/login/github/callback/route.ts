@@ -38,6 +38,20 @@ export async function GET(request: Request): Promise<Response> {
       });
     }
 
+    if (!githubUser.email) {
+      const githubUserEmailResponse = await fetch(
+        "https://api.github.com/user/emails",
+        {
+          headers: {
+            Authorization: `Bearer ${tokens.accessToken}`,
+          },
+        }
+      );
+      const githubUserEmails = await githubUserEmailResponse.json();
+
+      githubUser.email = getPrimaryEmail(githubUserEmails);
+    }
+
     const userId = await createGithubUserUseCase(githubUser);
     await setSession(userId);
     return new Response(null, {
@@ -66,4 +80,16 @@ export interface GitHubUser {
   login: string;
   avatar_url: string;
   email: string;
+}
+
+function getPrimaryEmail(emails: Email[]): string {
+  const primaryEmail = emails.find((email) => email.primary);
+  return primaryEmail!.email;
+}
+
+interface Email {
+  email: string;
+  primary: boolean;
+  verified: boolean;
+  visibility: string | null;
 }
