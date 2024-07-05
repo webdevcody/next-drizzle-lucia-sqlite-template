@@ -23,11 +23,21 @@ export const assertAuthenticated = async () => {
 };
 
 export async function setSession(userId: UserId) {
-  const session = await lucia.createSession(userId, {});
-  const sessionCookie = lucia.createSessionCookie(session.id);
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes
-  );
+  const existingSessions = await lucia.getUserSessions(userId);
+  if (existingSessions.length > 0) {
+    const sessionCookie = lucia.createSessionCookie(existingSessions[0].id);
+    cookies().set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes,
+    );
+  } else {
+    const session = await lucia.createSession(userId, {});
+    const sessionCookie = lucia.createSessionCookie(session.id);
+    cookies().set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes,
+    );
+  }
 }
