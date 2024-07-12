@@ -13,9 +13,9 @@ export function LoaderButton({
       disabled={isLoading}
       type="submit"
       {...props}
-      className={cn("flex gap-2 justify-center px-3", className)}
+      className={cn("flex justify-center gap-2 px-3", className)}
     >
-      {isLoading && <Loader2Icon className="animate-spin w-4 h-4" />}
+      {isLoading && <Loader2Icon className="h-4 w-4 animate-spin" />}
       {children}
     </Button>
   );

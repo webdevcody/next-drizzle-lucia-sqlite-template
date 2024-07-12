@@ -16,7 +16,7 @@ export async function generateRandomToken(length: number) {
 }
 
 export async function createTransaction<T extends typeof db>(
-  cb: (trx: T) => void
+  cb: (trx: T) => void,
 ) {
   await db.transaction(cb as any);
 }

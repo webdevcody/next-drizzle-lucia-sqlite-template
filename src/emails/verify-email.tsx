@@ -26,24 +26,24 @@ export function VerifyEmail({ token }: { token: string }) {
       <Preview>Verify your Email</Preview>
       <Tailwind>
         <React.Fragment>
-          <Body className="bg-white my-auto mx-auto font-sans">
-            <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
+          <Body className="mx-auto my-auto bg-white font-sans">
+            <Container className="mx-auto my-[40px] w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
               <Section className="mt-[32px]">
                 <Img
                   src={`${BASE_URL}/group.jpeg`}
                   width="160"
                   height="48"
                   alt="StarterKit"
-                  className="my-0 mx-auto"
+                  className="mx-auto my-0"
                 />
               </Section>
 
-              <Section className="text-center mt-[32px] mb-[32px]">
-                <Text className="text-black font-medium text-[14px] leading-[24px] mb-8">
+              <Section className="mb-[32px] mt-[32px] text-center">
+                <Text className="mb-8 text-[14px] font-medium leading-[24px] text-black">
                   Click the following link to verify your email
                 </Text>
 
-                <Text className="text-black font-medium text-[14px] leading-[24px]">
+                <Text className="text-[14px] font-medium leading-[24px] text-black">
                   <Link
                     href={`${BASE_URL}/api/login/verify-email?token=${token}`}
                     target="_blank"
@@ -54,9 +54,9 @@ export function VerifyEmail({ token }: { token: string }) {
                 </Text>
               </Section>
 
-              <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
+              <Hr className="mx-0 my-[26px] w-full border border-solid border-[#eaeaea]" />
 
-              <Text className="text-[#666666] text-[12px] leading-[24px] flex items-center justify-center">
+              <Text className="flex items-center justify-center text-[12px] leading-[24px] text-[#666666]">
                 © 2024 {applicationName}. All rights reserved.
               </Text>
             </Container>

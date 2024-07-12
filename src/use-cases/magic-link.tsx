@@ -21,7 +21,7 @@ export async function sendMagicLinkUseCase(email: string) {
   await sendEmail(
     email,
     `Your magic login link for ${applicationName}`,
-    <MagicLinkEmail token={token} />
+    <MagicLinkEmail token={token} />,
   );
 }
 

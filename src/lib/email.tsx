@@ -8,7 +8,7 @@ const resend = new Resend(env.EMAIL_SERVER_PASSWORD);
 export async function sendEmail(
   email: string,
   subject: string,
-  body: ReactNode
+  body: ReactNode,
 ) {
   const { error } = await resend.emails.send({
     from: env.EMAIL_FROM,

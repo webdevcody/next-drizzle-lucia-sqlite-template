@@ -31,7 +31,7 @@ async function hashPassword(plainTextPassword: string, salt: string) {
       (err, derivedKey) => {
         if (err) reject(err);
         resolve(derivedKey.toString("hex"));
-      }
+      },
     );
   });
 }

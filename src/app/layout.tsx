@@ -40,13 +40,13 @@ export default async function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background antialiased",
-          archivo.variable + " " + libre_franklin.variable
+          archivo.variable + " " + libre_franklin.variable,
         )}
       >
         <Providers>
           <NextTopLoader />
           <Header />
-          <div className="w-full mx-auto container py-12">{children}</div>
+          <div className="container mx-auto w-full py-12">{children}</div>
         </Providers>
         <Toaster />
       </body>
