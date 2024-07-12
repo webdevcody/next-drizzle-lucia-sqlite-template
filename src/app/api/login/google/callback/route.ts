@@ -6,7 +6,6 @@ import { getAccountByGoogleIdUseCase } from "@/use-cases/accounts";
 import { afterLoginUrl } from "@/app-config";
 import { setSession } from "@/lib/session";
 
-
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
@@ -29,7 +28,7 @@ export async function GET(request: Request): Promise<Response> {
   try {
     const tokens = await googleAuth.validateAuthorizationCode(
       code,
-      codeVerifier
+      codeVerifier,
     );
     const response = await fetch(
       "https://openidconnect.googleapis.com/v1/userinfo",
@@ -37,7 +36,7 @@ export async function GET(request: Request): Promise<Response> {
         headers: {
           Authorization: `Bearer ${tokens.accessToken}`,
         },
-      }
+      },
     );
     const googleUser: GoogleUser = await response.json();
 

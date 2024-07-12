@@ -61,7 +61,7 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="py-24 mx-auto max-w-[400px] space-y-6">
+    <div className="mx-auto max-w-[400px] space-y-6 py-24">
       <h1 className={cn(pageTitleStyles, "text-center")}>Sign In</h1>
 
       <Form {...form}>

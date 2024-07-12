@@ -59,7 +59,7 @@ export default function ResetPasswordPage({
   }
 
   return (
-    <div className="py-24 max-w-[400px] space-y-6 mx-auto">
+    <div className="mx-auto max-w-[400px] space-y-6 py-24">
       {isSuccess && (
         <>
           <h1 className={cn(pageTitleStyles, "text-center")}>

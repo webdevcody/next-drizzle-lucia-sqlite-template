@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 export async function createProfile(
   userId: UserId,
   displayName: string,
-  image?: string
+  image?: string,
 ) {
   const [profile] = await db
     .insert(profiles)
@@ -22,7 +22,7 @@ export async function createProfile(
 
 export async function updateProfile(
   userId: UserId,
-  updateProfile: Partial<Profile>
+  updateProfile: Partial<Profile>,
 ) {
   await db
     .update(profiles)

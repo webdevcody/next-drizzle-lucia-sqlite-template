@@ -45,7 +45,7 @@ export async function GET(request: Request): Promise<Response> {
           headers: {
             Authorization: `Bearer ${tokens.accessToken}`,
           },
-        }
+        },
       );
       const githubUserEmails = await githubUserEmailResponse.json();
 

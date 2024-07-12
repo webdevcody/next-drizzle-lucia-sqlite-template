@@ -10,7 +10,7 @@ import { MagicLinkForm } from "./magic-link-form";
 
 export default function SignInPage() {
   return (
-    <div className="py-24 flex min-h-[80dvh] items-center justify-center mx-auto">
+    <div className="mx-auto flex min-h-[80dvh] items-center justify-center py-24">
       <div className="mx-auto max-w-md space-y-6">
         <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold">Sign In</h1>
@@ -25,10 +25,10 @@ export default function SignInPage() {
               buttonVariants({
                 variant: "secondary",
               }),
-              "w-full"
+              "w-full",
             )}
           >
-            <GoogleIcon className="stroke-white mr-2 h-5 w-5" />
+            <GoogleIcon className="mr-2 h-5 w-5 stroke-white" />
             Sign in with Google
           </Link>
           <Link
@@ -37,7 +37,7 @@ export default function SignInPage() {
               buttonVariants({
                 variant: "secondary",
               }),
-              "w-full"
+              "w-full",
             )}
           >
             <GithubIcon className="mr-2 h-5 w-5" />

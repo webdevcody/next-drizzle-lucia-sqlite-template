@@ -8,7 +8,7 @@ export default function ErrorPage({
   error: Error & { digest?: string };
 }) {
   return (
-    <div className="container mx-auto py-12 min-h-screen space-y-8">
+    <div className="container mx-auto min-h-screen space-y-8 py-12">
       <>
         <h1 className={pageTitleStyles}>Oops! Something went wrong</h1>
         <p className="text-lg">{error.message}</p>

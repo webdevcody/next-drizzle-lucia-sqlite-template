@@ -24,9 +24,9 @@ export async function Header() {
 
   return (
     <div className="border-b py-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="flex gap-8 items-center">
-          <Link href="/" className="flex gap-2 items-center text-xl">
+      <div className="container mx-auto flex items-center justify-between">
+        <div className="flex items-center gap-8">
+          <Link href="/" className="flex items-center gap-2 text-xl">
             <Lightbulb />
             <div className="hidden md:block">APP</div>
           </Link>
@@ -39,7 +39,7 @@ export async function Header() {
                 className="flex items-center justify-center gap-2"
               >
                 <Link href={"/dashboard"}>
-                  <LayoutDashboard className="w-4 h-4" /> Dashboard
+                  <LayoutDashboard className="h-4 w-4" /> Dashboard
                 </Link>
               </Button>
             )}
@@ -49,8 +49,8 @@ export async function Header() {
         <div className="flex items-center justify-between gap-5">
           <Suspense
             fallback={
-              <div className="flex items-center justify-center w-40">
-                <Loader2Icon className="animate-spin w-4 h-4" />
+              <div className="flex w-40 items-center justify-center">
+                <Loader2Icon className="h-4 w-4 animate-spin" />
               </div>
             }
           >
@@ -110,7 +110,7 @@ async function ProfileDropdown({ userId }: { userId: UserId }) {
       <DropdownMenuTrigger>
         <Suspense
           fallback={
-            <div className="bg-gray-800 rounded-full h-10 w-10 shrink-0 flex items-center justify-center">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-800">
               ..
             </div>
           }
@@ -124,7 +124,7 @@ async function ProfileDropdown({ userId }: { userId: UserId }) {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="cursor-pointer">
           <Link className="flex items-center" href={"/api/sign-out"}>
-            <LogOut className="w-4 h-4 mr-2" />
+            <LogOut className="mr-2 h-4 w-4" />
             Sign Out
           </Link>
         </DropdownMenuItem>

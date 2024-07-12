@@ -28,6 +28,6 @@ export async function setSession(userId: UserId) {
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes
+    sessionCookie.attributes,
   );
 }

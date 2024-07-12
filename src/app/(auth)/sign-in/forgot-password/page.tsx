@@ -39,7 +39,7 @@ export default function ForgotPasswordPage() {
           variant: "destructive",
         });
       },
-    }
+    },
   );
 
   const form = useForm<z.infer<typeof registrationSchema>>({
@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="py-24 mx-auto max-w-[400px] space-y-6">
+    <div className="mx-auto max-w-[400px] space-y-6 py-24">
       <h1 className={cn(pageTitleStyles, "text-center")}>Forgot Password</h1>
 
       {isSuccess && (

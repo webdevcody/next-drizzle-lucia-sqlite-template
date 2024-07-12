@@ -14,7 +14,7 @@ export const signInAction = unauthenticatedAction
     z.object({
       email: z.string().email(),
       password: z.string().min(8),
-    })
+    }),
   )
   .handler(async ({ input }) => {
     await rateLimitByKey({ key: input.email, limit: 3, window: 10000 });

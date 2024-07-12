@@ -10,7 +10,7 @@ export const resetPasswordAction = unauthenticatedAction
   .input(
     z.object({
       email: z.string().email(),
-    })
+    }),
   )
   .handler(async ({ input }) => {
     await rateLimitByKey({ key: input.email, limit: 1, window: 30000 });

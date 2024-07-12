@@ -17,7 +17,7 @@ async function hashPassword(plainTextPassword: string, salt: string) {
       (err, derivedKey) => {
         if (err) reject(err);
         resolve(derivedKey.toString("hex"));
-      }
+      },
     );
   });
 }
@@ -72,7 +72,7 @@ export async function getAccountByUserId(userId: UserId) {
 export async function updatePassword(
   userId: UserId,
   password: string,
-  trx = db
+  trx = db,
 ) {
   const salt = crypto.randomBytes(128).toString("base64");
   const hash = await hashPassword(password, salt);
