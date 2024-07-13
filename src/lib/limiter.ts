@@ -3,20 +3,20 @@ import { getIp } from "./get-ip";
 
 const PRUNE_INTERVAL = 60 * 1000; // 1 minute
 
-const trackers: Record<
-  string,
-  {
-    count: number;
-    expiresAt: number;
-  }
-> = {};
+const trackers = new Map<
+string,
+{
+  count: number;
+  expiresAt: number;
+}
+>();
 
 function pruneTrackers() {
   const now = Date.now();
 
-  for (const key in trackers) {
-    if (trackers[key].expiresAt < now) {
-      delete trackers[key];
+  for (const [key, value] of trackers.entries()) {
+    if (value.expiresAt < now) {
+      trackers.delete(key)
     }
   }
 }
@@ -54,11 +54,7 @@ export async function rateLimitByKey({
   limit: number;
   window: number;
 }) {
-  const tracker = trackers[key] || { count: 0, expiresAt: 0 };
-
-  if (!trackers[key]) {
-    trackers[key] = tracker;
-  }
+  let tracker = trackers.get(key) || { count: 0, expiresAt: 0 };
 
   if (tracker.expiresAt < Date.now()) {
     tracker.count = 0;
@@ -70,4 +66,6 @@ export async function rateLimitByKey({
   if (tracker.count > limit) {
     throw new RateLimitError();
   }
+
+  trackers.set(key, tracker);
 }
