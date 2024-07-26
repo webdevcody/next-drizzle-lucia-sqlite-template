@@ -38,6 +38,7 @@ import {
 } from "./errors";
 import { db } from "@/db";
 import { createTransaction } from "@/data-access/utils";
+import { deleteAllSessions } from "@/data-access/sessions";
 
 export async function deleteUserUseCase(
   authenticatedUser: UserSession,
@@ -152,6 +153,7 @@ export async function changePasswordUseCase(token: string, password: string) {
   await createTransaction(async (trx) => {
     await deletePasswordResetToken(token, trx);
     await updatePassword(userId, password, trx);
+    await deleteAllSessions(userId, trx);
   });
 }
 
