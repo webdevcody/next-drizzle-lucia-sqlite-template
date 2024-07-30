@@ -53,7 +53,25 @@ If you want google login, you'll need to setup a google project and create some 
 
 ### Setting up Github Provider
 
-TODO
+If you want GitHub login, you'll need to set up a GitHub OAuth application and create some keys:
+
+1. https://github.com/settings/developers
+2. create a new OAuth app
+3. fill in the required fields:
+   - **Application Name:** Your application's name.
+   - **Homepage URL:**
+     - http://localhost:3000
+     - https://your-domain.com
+   - **Authorization Callback URL:**
+     - http://localhost:3000/api/login/github/callback
+     - https://your-domain.com/api/login/github/callback
+4. Click "Register Application" to create your OAuth app.
+5. Copy your **Client ID** and **Client Secret**.
+
+6. Set your GitHub id and secret inside of .env
+
+- **GITHUB_CLIENT_ID**
+- **GITHUB_CLIENT_SECRET**
 
 ## Contributing
 
