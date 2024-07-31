@@ -123,10 +123,12 @@ async function ProfileDropdown({ userId }: { userId: UserId }) {
         <DropdownMenuLabel>{profile.displayName}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link className="flex items-center" href={"/api/sign-out"}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign Out
-          </Link>
+          <form action="/api/sign-out" method="POST">
+            <Button type="submit" variant="ghost" className="flex items-center hover:bg-transparent">
+              <LogOut className="mr-2 h-4 w-4" />
+              Sign Out
+            </button>
+          </form>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
