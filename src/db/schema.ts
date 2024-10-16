@@ -74,3 +74,4 @@ export const sessions = sqliteTable("session", {
 
 export type User = typeof users.$inferSelect;
 export type Profile = typeof profiles.$inferSelect;
+export type Session = typeof sessions.$inferSelect;

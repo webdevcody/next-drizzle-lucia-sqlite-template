@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     { rel: "icon", type: "image/png", sizes: "48x48", url: "/favicon.ico" },
   ],
   keywords: "yolo",
-  description: "A simple next.js template including drizzle and lucia auth",
+  description: "A simple next.js template including drizzle and auth with artic and oslo",
 };
 
 export default async function RootLayout({

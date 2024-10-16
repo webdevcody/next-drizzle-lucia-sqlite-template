@@ -1,5 +1,4 @@
-import { lucia, validateRequest } from "@/lib/auth";
-import { cookies } from "next/headers";
+import { invalidateSession, validateRequest }  from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export async function GET(): Promise<Response> {
@@ -9,13 +8,7 @@ export async function GET(): Promise<Response> {
   if (!session) {
     redirect("/sign-in");
   }
-
-  await lucia.invalidateSession(session.id);
-  const sessionCookie = lucia.createBlankSessionCookie();
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes,
-  );
+  await invalidateSession(session.id);
+ 
   redirect("/signed-out");
 }
